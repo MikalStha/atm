@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/main" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Automatic Teller</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <hr/>
+    <img th:src ="${image}" alt="logo" class="img-rounded "/>
+    <h1 class="text-center">Automatic Teller Ready</h1>
+    <hr/>
+    <article>
+        <section>
+            <h4 th:text="${message}"></h4>
+        </section>
+        <section th:if="${displayAmount}">
+           <h4>$50:  <span th:text="${fifties}"></span></h4>
+           <h4> $20:  <span th:text="${twenties}"></span> </h4>
+        </section>
+
+        <section>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button id="systemenquiries" type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    System Enquiries
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <ul>
+                        <li><a class="dropdown-item" href="/atm/check?type=20">How many $20 notes are left?</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/check?type=50">How many $50 notes are left?</a> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button id="withdrawals" type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Make a withdrawal
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                    <ul>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/20">Withdraw $20</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/40">Withdraw $40</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/50">Withdraw $50</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/70">Withdraw $70</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/80">Withdraw $80</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/100">Withdraw $100</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/150">Withdraw $150</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/60">Withdraw $60</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/110">Withdraw $110</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/200">Withdraw $200</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/withdraw/10000">Withdraw $10 000</a> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button id="topup" type="button" class="btn btn-primary dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Load More Money
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                    <ul>
+                        <li><a class="dropdown-item" href="/atm/load/20/10">Load 10 more $20s</a> </li>
+                        <li> <a class="dropdown-item" href="/atm/load/50/10">Load 10 more $50s</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </article>
+</div>
+
+</body>
+</html>

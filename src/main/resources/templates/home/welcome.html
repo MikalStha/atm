@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/main" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Automatic Teller</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <hr/>
+    <img th:src ="${image}" alt="logo" class="img-rounded "/>
+    <h1 class="text-center">Initialise Automatic Teller</h1>
+    <hr/>
+    <article>
+        <section th:if="${initiliased} == false">
+            <h4>Load cashbox to initialise the machine prior to usage</h4>
+            <form action="#" th:action="@{/atm/initialise}" th:object="${money}" method="post">
+                <div class="form-group">
+                <label for="twenty">Twenties:</label>
+                    <select id="twenty" class="form-control"  th:field="*{twenties}" >
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                <label for="fifty">Fifties:</label>
+                    <select id="fifty" class="form-control" th:field="*{fifties}" >
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" value="Submit">Load Money</button>
+            </form>
+        </section>
+        <section >
+            <span th:text="${message}">Message</span>
+        </section>
+        </article>
+</div>
+
+</body>
+</html>
