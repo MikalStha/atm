@@ -1,6 +1,7 @@
 
 # Automatic Teller Machine
-Test for Suncorp  November 2017
+
+ November 2017
 
 ##### Implements Mandatory Feature Set
 
