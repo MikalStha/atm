@@ -3,7 +3,7 @@
 
  November 2017
 
-##### Implements Mandatory Feature Set
+##### Implements Feature Set
 
 1. Device has a supply of bank notes
 
@@ -23,9 +23,7 @@
 
 9. If a requested withdrawal cannot be met the amount of money remaining is unchanged
 
-##### Implements Optional Feature Set
-
-1. Data is persisted (in a H2 in memory database which can be swapped for permanent persistence for other environments
+10. Data is persisted (in a H2 in memory database which can be swapped for permanent persistence for other environments
 by configuration.)
 
 ##Technologies
@@ -92,23 +90,76 @@ This project uses Maven as its build tool.
 
 ## Tests
 
-### Comand line
+There are 15 integration tests written in Groovy using Spock and a bit of Spring Test. I have left them to run in the
+unit test phase as I figured you will want to see them running and moving them into an integration test phase would
+require extra complexity and explanation that is not helpful at this point - and some of them are kind of borderline
+unit/integration tests.
 
-mvn test 
+Here is an example of one way of doing this using Maven:
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <includes>
+                        <!--<include>**/*Tests.java</include>-->
+                        <include>**/*IT*</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+### Command line
+
+mvn test or mvn package
 
 
 ## Notes
 
-1. Although the user interface is basic, you should get good re-sizing results as Bootstrap gives you good mobile-first features out of the box.
-2.Error handling has not been implemented, need more tests, there are also some hard-coded strings that need to be moved, either to property files, loaded by the model or from more interactive UI. There is duplicate code in the 2 controllers that needs to be refactored.
+1. Although the user interface is basic, you should get good re-sizing results as Bootstrap gives you good mobile-first
+ features out of the box.
+2. Global Error handling has not been implemented, needs more tests, there are also some hard-coded strings that need
+ to be moved, either to property files, loaded by the model or from more interactive UI. There is duplicate code in 
+ the 2 controllers that needs to be refactored.
 3. The cash dispensing algorithm needs to be replaced with a better more succinct one.
 4. Dealing with currency - because we are dealing with whole numbers using BigDecimal is probably overkill in this
  instance. I'm thinking the Java Money and Currency API is worth a look if extending functionality.
-5. The ATM controller could be complemented by a RestController API serving up JSON data - using ResponseBody 
-and Jackson.
+5. I also added a RestController API controller serving up JSON data - using ResponseBody 
+and Jackson. If I had have thought of it earlier I would have integrated the 2 controllers more closely.
 6. To build this project you need Maven. To run this project you need Java 8.
 
+### Test Driven Development
 
+Yes, I did. You'll notice that the tests (and the scenarios that inform them) match the feature set above quite closely.
+
+I used Spock because it combines JUnit and Mocking capabilities, is 100% JUnit compatible, you can use Groovy, and
+it has a nice behaviour driven development style.
+
+### Frameworks
+
+I use Spring Boot as it adds extra features and convenience to the excellent Spring Framework which is the most
+productive framework currently available for Java web development.  Spring Boot ports all of the advantages of Grails
+back into the parent Spring family including the Ruby on Rails convention over configuration paradigm which allows
+enhanced automation and productivity.
+
+### Design patterns
+
+I didn't consciously select any design patterns - however as we are using Spring Boot we have a good Model View 
+Controller example - including the placement of business logic into a Service layer and most of our objects implement
+ the Singleton pattern automatically.
+
+ 
 
 
 
