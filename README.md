@@ -156,8 +156,12 @@ enhanced automation and productivity.
 ### Design patterns
 
 I didn't consciously select any design patterns - however as we are using Spring Boot we have a good Model View 
-Controller example - including the placement of business logic into a Service layer and most of our objects implement
- the Singleton pattern automatically.
+Controller example - including the placement of business logic into a Service layer.
+
+Belatedly found that the Chain of responsibility is useful for these type of tasks:
+
+https://www.journaldev.com/1617/chain-of-responsibility-design-pattern-in-java
+
 
  
 
