@@ -158,9 +158,15 @@ enhanced automation and productivity.
 I didn't consciously select any design patterns - however as we are using Spring Boot we have a good Model View 
 Controller example - including the placement of business logic into a Service layer.
 
-Belatedly found that the Chain of responsibility is useful for these type of tasks:
+Belatedly found that the Chain of responsibility might be useful for these type of tasks:
 
 https://www.journaldev.com/1617/chain-of-responsibility-design-pattern-in-java
+
+Added an API call based on a quick (that is not fully functional) implementation of this pattern:
+
+After using the UI to initialise the ATM you can then withdraw money with
+
+http://localhost:8081/api/chain/{amount} 
 
 
  

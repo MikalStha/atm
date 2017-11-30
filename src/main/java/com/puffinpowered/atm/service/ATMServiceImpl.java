@@ -194,7 +194,7 @@ public class ATMServiceImpl implements ATMService {
 	}
 
 
-	private Boolean checkEdgeCases(BigDecimal amount){
+	public Boolean checkEdgeCases(BigDecimal amount){
 		Boolean proceed = true;
 		BigDecimal availableFunds = this.availableFunds();
 		if(amount.compareTo(this.availableFunds()) > 0) {

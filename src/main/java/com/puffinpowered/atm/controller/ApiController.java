@@ -4,12 +4,12 @@ import com.puffinpowered.atm.domain.Cash;
 import com.puffinpowered.atm.domain.Money;
 import com.puffinpowered.atm.domain.Note;
 import com.puffinpowered.atm.enums.Denomination;
+import com.puffinpowered.atm.service.ATMChainService;
 import com.puffinpowered.atm.service.ATMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -22,13 +22,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
+
+
 	ATMService atmService;
 
+	//Added to try out the Chain Design Pattern
+	ATMChainService atmChainService;
 
 
 	@Autowired
-	public ApiController(ATMService atmService) {
+	public ApiController(ATMService atmService, ATMChainService atmChainService) {
 		this.atmService = atmService;
+		this.atmChainService = atmChainService;
 	}
 
 	@RequestMapping(value="/initialise", method = RequestMethod.POST)
@@ -51,7 +56,6 @@ public class ApiController {
 
 	@RequestMapping(value="/withdraw/{amount}", method = RequestMethod.GET)
 	public ResponseEntity<Cash> withDrawMoney(@PathVariable BigDecimal amount) {
-		String message = "Thank-you for your patronage, please find your bank notes below.";
 		List<Note> money = atmService.withDraw(amount);
 		Cash cash = new Cash(money);
 		HttpStatus status = HttpStatus.PRECONDITION_FAILED;
@@ -84,7 +88,30 @@ public class ApiController {
 	}
 
 
+	@RequestMapping(value="/chain/{amount}", method = RequestMethod.GET)
+	public ResponseEntity<Cash> withDrawMoneyWithChain(@PathVariable BigDecimal amount)  {
+		Note twenty = new Note(Denomination.TWENTY,0);
+		Note fifty = new Note(Denomination.FIFTY,0);
+		List<Note> money = new ArrayList<Note>(2);
+		money.add(fifty);
+		money.add(twenty);
+		if (atmService.checkEdgeCases(amount)){
+			 money =  atmChainService.withDraw(amount);
+		}
+		  return buildResponse(money);
+	}
 
+
+	private ResponseEntity<Cash>buildResponse(List<Note> money){
+		Cash cash = new Cash(money);
+		HttpStatus status = HttpStatus.PRECONDITION_FAILED;
+		Boolean amountWasDispensed = atmService.checkAmount(money);
+		if (amountWasDispensed) {
+			status = HttpStatus.OK;
+		}
+		return new ResponseEntity<Cash>(cash, status);
+
+	}
 
 	/**
 	 * Sample JSON Money format required

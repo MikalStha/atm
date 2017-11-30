@@ -19,6 +19,7 @@ public interface ATMService {
 
 	List<Note> loadMoney(Denomination denomination, BigDecimal amount);
 
+	 Boolean checkEdgeCases(BigDecimal amount);
 
 	Boolean checkAmount(List<Note> money);
 }
